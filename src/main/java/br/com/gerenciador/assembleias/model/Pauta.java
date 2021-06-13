@@ -162,12 +162,23 @@ public class Pauta {
 	
 	private void enviaMensagemNovoResultadoVotacao() {
 		KafkaProducer<String, String> producer = new KafkaProducer<String, String>(this.properties());
-		String valores = this.id+","+this.titulo+","+this.qtdVotosSim+","+this.qtdVotosNao;
-		String chaves = "id,titulo,qtdVotosSim,qtdVotosNao";
-		ProducerRecord<String, String> record = new ProducerRecord<String, String>(Pauta.TOPICO_NOVO_RESULTADO_VOTACAO, chaves, valores);
+		String valores = this.id + "," + this.titulo + "," + this.verificaResultadoParaMensagem();
+		String chaves = "id,titulo,resultado";
+		ProducerRecord<String, String> record = new ProducerRecord<String, String>(Pauta.TOPICO_NOVO_RESULTADO_VOTACAO,
+				chaves, valores);
 		producer.send(record);
 	}
-	
+
+	private ResultadoVotacaoEnum verificaResultadoParaMensagem() {
+		if (this.qtdVotosSim == this.qtdVotosNao) {
+			return ResultadoVotacaoEnum.EMPATE;
+		} else if (this.qtdVotosSim > this.qtdVotosNao) {
+			return ResultadoVotacaoEnum.APROVADO;
+		} else {
+			return ResultadoVotacaoEnum.REJEITADO;
+		}
+	}
+
 	private Properties properties() {
 		Properties properties = new Properties();
 		properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
