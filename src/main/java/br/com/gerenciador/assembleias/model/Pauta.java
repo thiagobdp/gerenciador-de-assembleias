@@ -2,6 +2,7 @@ package br.com.gerenciador.assembleias.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Properties;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,12 +14,19 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
+
 import br.com.gerenciador.assembleias.controller.form.AbreSessaoForm;
 import br.com.gerenciador.assembleias.controller.form.PautaForm;
 
 @Entity
 public class Pauta {
 
+	private static String TOPICO_NOVO_RESULTADO_VOTACAO = "NOVO_RESULTADO_VOTACAO";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -131,6 +139,7 @@ public class Pauta {
 			if (LocalDateTime.now().isAfter(this.fimSessao)) {
 				this.sessaoFechada = true;
 				this.contabilizaVotos();
+				this.enviaMensagemNovoResultadoVotacao();
 			}
 		}
 	}
@@ -149,5 +158,21 @@ public class Pauta {
 				}
 			});
 		}
+	}
+	
+	private void enviaMensagemNovoResultadoVotacao() {
+		KafkaProducer<String, String> producer = new KafkaProducer<String, String>(this.properties());
+		String valores = this.id+","+this.titulo+","+this.qtdVotosSim+","+this.qtdVotosNao;
+		String chaves = "id,titulo,qtdVotosSim,qtdVotosNao";
+		ProducerRecord<String, String> record = new ProducerRecord<String, String>(Pauta.TOPICO_NOVO_RESULTADO_VOTACAO, chaves, valores);
+		producer.send(record);
+	}
+	
+	private Properties properties() {
+		Properties properties = new Properties();
+		properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
+		properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+		properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+		return properties;
 	}
 }
