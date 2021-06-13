@@ -63,6 +63,46 @@ E a documentação Swagger está disponível na URL
 Ao realizar o voto, o sistema validará nessa API externa se o CPF informado é válido. Caso seja valido, retornará permitindo o voto. Caso seja inválido, retornará erro.
 
 
+## Tarefa Bônus 2 - Mensageria e filas
+
+### Configurando Apache Kafka
+
+Baixar a versão do link abaixo e descompactar no diretório C:/. 
+
+* https://ftp.unicamp.br/pub/apache/kafka/2.8.0/kafka_2.13-2.8.0.tgz
+
+O programa 7zip realiza realiza o descompactamento
+
+* https://www.7-zip.org/download.html
+
+Ao descompactar, irá gerar um arquivo chamado "kafka_2.13-2.8.0.tar". Também é necessário descompatar esse arquivo utilizando o 7zip.
+
+O resultado final será um diretório chamado "kafka_2.13-2.8.0"
+
+Definir variável de ambiente JAVA_HOME
+1. No windows, em "Propriedades do Sistema" clicar em "Variáveis de Ambiente"
+2. Definir a variável caso ainda não esteja definida
+3. Nome da variável: `JAVA_HOME`
+4. Valor da variável: `C:\Program Files (x86)\Java\jre1.8.0_291` -> Neste caso substitua pelo diretório em que seu java está instalado
+
+Iniciar o zookeeper
+1. abrir prompt de comando do Windows (cmd)
+2. executar o comando: `cd C:\kafka_2.13-2.8.0`
+3. executar o comando: `bin\windows\zookeeper-server-start.bat config\zookeeper.properties`
+4. Se ocorrer o erro `'Error: missing server' JVM at C:\Program Files (x86)\Java\jre1.8.0_291\bin\server\jvm.dll'. Please install or use the JRE or JDK that contains these missing components.` Executar o passo 5, se não, pular para o passo 9
+5. Via Explorador de Arquivos (Windows Explorer) navegar até o diretório "C:\Program Files (x86)\Java\jre1.8.0_291\bin"
+6. Criar um diretório vazio chamado "server"
+7. Copiar todo o conteúdo do diretório "client" para o novo diretório "server". Atenção para copiar somente o conteúdo do diretório "client". O próprio diretório "client" não deve ser copiado, somente seu conteúdo.
+8. Executar novamente o passo 4.
+9. Se o Zookeeper foi iniciado com sucesso, uma das linhas exibidas no terminal será: `INFO binding to port 0.0.0.0/0.0.0.0:2181 (org.apache.zookeeper.server.NIOServerCnxnFactory)`
+11. Não fechar (apenas minimizar) este terminal pois o Zookeeper ficará sendo executado nele.
+
+Iniciar o zookeeper
+1. Abrir novo prompt de comando do Windows (cmd)
+2. executar o comando: `cd C:\kafka_2.13-2.8.0`
+3. executar o comando: `bin\windows\kafka-server-start.bat config\server.properties`
+4. Se o Kafka foi iniciado com sucesso, uma das linhas exibidas no terminal será: `INFO [KafkaServer id=0] started (kafka.server.KafkaServer)`
+5. Por padrão o kafka é executado na porta 9092
 
 
 
