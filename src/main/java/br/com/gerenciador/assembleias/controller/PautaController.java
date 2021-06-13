@@ -1,5 +1,6 @@
 package br.com.gerenciador.assembleias.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.gerenciador.assembleias.controller.dto.PautaDetalhesDto;
 import br.com.gerenciador.assembleias.controller.dto.PautaDto;
@@ -25,6 +27,9 @@ import br.com.gerenciador.assembleias.controller.form.PautaForm;
 import br.com.gerenciador.assembleias.model.Pauta;
 import br.com.gerenciador.assembleias.repository.PautaRepository;
 import br.com.gerenciador.assembleias.repository.VotoRepository;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/pauta")
@@ -35,8 +40,12 @@ public class PautaController {
 
 	@Autowired
 	VotoRepository votoRepository;
-
-	@GetMapping(consumes = { "application/json" })
+		
+	@ApiOperation(value = "Lista todas as pautas cadastradas")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Retorna a lista de Pautas")
+		})
+	@GetMapping(produces = { "application/json" })
 	public List<PautaDto> listar() {
 		return pautaRepository.findAll().stream().map(pauta -> PautaDto.converter(pauta)).collect(Collectors.toList());
 	}
@@ -47,10 +56,17 @@ public class PautaController {
 	 * @param pautaForm
 	 * @return
 	 */
+	@ApiOperation(value = "Cadastra nova Pauta")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 201, message = "Retorna a Pauta que foi cadastrada")
+		})
 	@Transactional
-	@PostMapping(consumes = { "application/json" })
-	public PautaDto cadastrar(@RequestBody @Valid PautaForm pautaForm) {
-		return PautaDto.converter(pautaRepository.save(new Pauta(pautaForm)));
+	@PostMapping(consumes = { "application/json" }, produces = { "application/json" })
+	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaForm pautaForm, UriComponentsBuilder uriBuilder) {
+		Pauta pauta = pautaRepository.save(new Pauta(pautaForm));
+		
+		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(pauta.getId()).toUri();
+		return ResponseEntity.created(uri).body(PautaDto.converter(pauta));
 	}
 
 	/**
@@ -62,8 +78,14 @@ public class PautaController {
 	 *                       campos, mesmo que informe zero
 	 * @return
 	 */
+	@ApiOperation(value = "Abre uma sessão para votação")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Sessão aberta com sucesso. Retorna a pauta da sessão que foi aberta."),
+		    @ApiResponse(code = 404, message = "Pauta não encontrada."),
+		    @ApiResponse(code = 500, message = "Sessão já está aberta.")
+		})
 	@Transactional
-	@PutMapping(consumes = { "application/json" }, value = "/{id}/abrirsessao")
+	@PutMapping(consumes = { "application/json" }, value = "/{id}/abrirsessao", produces = { "application/json" })
 	public ResponseEntity<SessaoAbertaDto> abrirSessao(@PathVariable Long id,
 			@RequestBody(required = false) @Valid AbreSessaoForm abreSessaoForm) {
 
@@ -83,8 +105,13 @@ public class PautaController {
 
 	}
 
+	@ApiOperation(value = "Consulta os detalhes de uma pauta")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Retorna os detalhes da pauta."),
+		    @ApiResponse(code = 404, message = "Pauta não encontrada.")
+		})
 	@Transactional
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/{id}", produces = { "application/json" })
 	public ResponseEntity<PautaDetalhesDto> detalhes(@PathVariable Long id) {
 		Optional<Pauta> opt = pautaRepository.findById(id);
 		if (opt.isEmpty()) {

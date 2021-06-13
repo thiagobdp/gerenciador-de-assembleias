@@ -3,16 +3,32 @@ package br.com.gerenciador.assembleias.controller.dto;
 import java.time.LocalDateTime;
 
 import br.com.gerenciador.assembleias.model.Pauta;
+import io.swagger.annotations.ApiModelProperty;
 
 public class PautaDetalhesDto {
 
+	@ApiModelProperty(value="Identificação da Pauta no banco de dados")
 	private Long id;
+	
+	@ApiModelProperty(value="Título da Pauta")
 	private String titulo;
+	
+	@ApiModelProperty(value="Descrição da Pauta")
 	private String descricao;
+	
+	@ApiModelProperty(value="Hora em que a sessão foi iniciada")
 	private LocalDateTime inicioSessao;
+	
+	@ApiModelProperty(value="Hora em que a sessão será fechada")
 	private LocalDateTime fimSessao;
-	private Long qtdVotosSim;
-	private Long qtdVotosNao;
+	
+	@ApiModelProperty(value="Quantidade de votos SIM")
+	private Integer qtdVotosSim;
+	
+	@ApiModelProperty(value="Quantidade de votos NÃO")
+	private Integer qtdVotosNao;
+	
+	@ApiModelProperty(value="Identifica se a sessão já está fechada")
 	private Boolean sessaoFechada;
 
 	public static PautaDetalhesDto converter(Pauta pauta) {
@@ -69,19 +85,19 @@ public class PautaDetalhesDto {
 		this.fimSessao = fimSessao;
 	}
 
-	public Long getQtdVotosSim() {
+	public Integer getQtdVotosSim() {
 		return qtdVotosSim;
 	}
 
-	public void setQtdVotosSim(Long qtdVotosSim) {
+	public void setQtdVotosSim(Integer qtdVotosSim) {
 		this.qtdVotosSim = qtdVotosSim;
 	}
 
-	public Long getQtdVotosNao() {
+	public Integer getQtdVotosNao() {
 		return qtdVotosNao;
 	}
 
-	public void setQtdVotosNao(Long qtdVotosNao) {
+	public void setQtdVotosNao(Integer qtdVotosNao) {
 		this.qtdVotosNao = qtdVotosNao;
 	}
 

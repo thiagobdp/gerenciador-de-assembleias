@@ -33,6 +33,9 @@ import br.com.gerenciador.assembleias.model.ResultadoValidaUsuarioEnum;
 import br.com.gerenciador.assembleias.model.Voto;
 import br.com.gerenciador.assembleias.repository.PautaRepository;
 import br.com.gerenciador.assembleias.repository.VotoRepository;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/voto")
@@ -46,7 +49,11 @@ public class VotoController {
 	@Autowired
 	VotoRepository votoRepository;
 
-	@GetMapping()
+	@ApiOperation(value = "Lista todos os votos realziados")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Retorna a lista de Votos")
+		})
+	@GetMapping(produces = { "application/json" })
 	public List<VotoDto> listar() {
 		return votoRepository.findAll().stream().map(voto -> VotoDto.converter(voto)).collect(Collectors.toList());
 	}
@@ -59,8 +66,14 @@ public class VotoController {
 	 * @param uriBuilder
 	 * @return
 	 */
+	@ApiOperation(value = "Realiza o voto de um usuário")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 500, message = "Alguma exceção é lançada por erro de negócio"),
+		    @ApiResponse(code = 404, message = "Pauta não foi encontrada"),
+		    @ApiResponse(code = 201, message = "Voto realizado com sucesso. Retorna o novo voto.")
+		})
 	@Transactional
-	@PostMapping(consumes = { "application/json" }, value = "/votar")
+	@PostMapping(consumes = { "application/json" }, value = "/votar", produces = { "application/json" })
 	public ResponseEntity<VotoDto> votar(@RequestBody @Valid VotoForm votoForm, UriComponentsBuilder uriBuilder) {
 
 		if (!this.isUsuarioAbleToVote(votoForm.getCpf())) {
@@ -122,6 +135,5 @@ public class VotoController {
 		} else {
 			return false;
 		}
-
 	}
 }

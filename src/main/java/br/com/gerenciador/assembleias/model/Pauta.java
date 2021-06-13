@@ -40,8 +40,8 @@ public class Pauta {
 	private LocalDateTime inicioSessao;
 	private LocalDateTime fimSessao;
 
-	private Long qtdVotosSim = 0L;
-	private Long qtdVotosNao = 0L;
+	private Integer qtdVotosSim = 0;
+	private Integer qtdVotosNao = 0;
 
 	// usar para verificar as sessoes que precisam ser analisadas
 	@NotNull
@@ -83,12 +83,12 @@ public class Pauta {
 		return sessaoFechada;
 	}
 
-	public Long getQtdVotosSim() {
+	public Integer getQtdVotosSim() {
 		this.verificaSeFechaSessao();
 		return qtdVotosSim;
 	}
 
-	public Long getQtdVotosNao() {
+	public Integer getQtdVotosNao() {
 		this.verificaSeFechaSessao();
 		return qtdVotosNao;
 	}
@@ -149,7 +149,7 @@ public class Pauta {
 	 * vez e armazena a contagem nas variáveis.
 	 */
 	private void contabilizaVotos() {
-		if (this.qtdVotosSim.compareTo(0L) == 0 && this.qtdVotosSim.compareTo(0L) == 0) {
+		if (this.qtdVotosSim.compareTo(0) == 0 && this.qtdVotosSim.compareTo(0) == 0) {
 			this.votos.stream().forEach(v -> {
 				if (v.getVoto().compareTo(VotoEnum.SIM) == 0) {
 					++this.qtdVotosSim;

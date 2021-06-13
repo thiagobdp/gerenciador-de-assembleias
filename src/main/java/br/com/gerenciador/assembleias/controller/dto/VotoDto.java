@@ -4,13 +4,23 @@ import java.time.LocalDateTime;
 
 import br.com.gerenciador.assembleias.model.Voto;
 import br.com.gerenciador.assembleias.model.VotoEnum;
+import io.swagger.annotations.ApiModelProperty;
 
 public class VotoDto {
 
+	@ApiModelProperty(value="Identificação do Voto no banco de dados")
 	private Long id;
+	
+	@ApiModelProperty(value="CPF do usuário que realizou o voto")
 	private Long cpf;
+	
+	@ApiModelProperty(value="Voto do usuário")
 	private VotoEnum voto;
+	
+	@ApiModelProperty(value="Hora em que o voto foi realizado")
 	private LocalDateTime dataHoraVoto;
+	
+	@ApiModelProperty(value="Identificação da Pauta no banco de dados")
 	private Long pautaId;
 
 	public VotoDto(Voto voto) {

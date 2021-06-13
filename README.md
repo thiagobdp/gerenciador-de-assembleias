@@ -9,6 +9,8 @@ Clone este repositório em seu computador: https://github.com/thiagobdp/gerencia
 
 ### Instalar Visual Studio 2015, 2017 e 2019
 
+Para utilizar o MySQL é necessário primeiro instalar o Visual Studio.
+
 Versões mais recentes do Visual C++:
 - https://support.microsoft.com/pt-br/topic/os-downloads-do-visual-c-mais-recentes-com-suporte-2647da03-1eea-4433-9aff-95f26a218cc0
 
@@ -42,12 +44,17 @@ Execute os seguintes comando no mysql prompt ( mysql> ):
 3- Fornece todos privilégios para o novo usuário no novo banco de dados
 * `grant all on bd_gerenciador_assembleias.* to 'pmanageruser'@'%';`
 
+As tabelas serão criadas neste banco de dados automaticamente pelo Hibernate quando a aplicação for inicializada.
+
 ## Objetivo
 
 Criado o sistema de votação de assembleias.
 
 É possível consultar a documentação Swagger pelo link abaixo quando executando em localhost:
 * http://localhost:8080/swagger-ui.html
+
+Ações disponíveis:
+* 
 
 ## Tarefa Bônus 1 - Integração com sistemas externos
 

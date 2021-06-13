@@ -3,11 +3,17 @@ package br.com.gerenciador.assembleias.controller.dto;
 import java.time.LocalDateTime;
 
 import br.com.gerenciador.assembleias.model.Pauta;
+import io.swagger.annotations.ApiModelProperty;
 
 public class SessaoAbertaDto {
 
+	@ApiModelProperty(value="Identificação da Pauta no banco de dados")
 	private Long id;
+	
+	@ApiModelProperty(value="Hora em que a sessão foi iniciada")
 	private LocalDateTime inicioSessao;
+	
+	@ApiModelProperty(value="Hora em que a sessão será fechada")
 	private LocalDateTime fimSessao;
 	
 	public static SessaoAbertaDto converter(Pauta pauta) {

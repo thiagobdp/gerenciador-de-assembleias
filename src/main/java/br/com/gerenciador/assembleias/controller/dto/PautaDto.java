@@ -1,13 +1,17 @@
 package br.com.gerenciador.assembleias.controller.dto;
 
 import br.com.gerenciador.assembleias.model.Pauta;
+import io.swagger.annotations.ApiModelProperty;
 
 public class PautaDto {
 
+	@ApiModelProperty(value="Identificação da Pauta no banco de dados")
 	private Long id;
 
+	@ApiModelProperty(value="Título da Pauta")
 	private String titulo;
 
+	@ApiModelProperty(value="Descrição da Pauta")
 	private String descricao;
 
 	public static PautaDto converter(Pauta pauta) {
