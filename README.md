@@ -65,11 +65,24 @@ Ao realizar o voto, o sistema validará nessa API externa se o CPF informado é 
 
 ## Tarefa Bônus 2 - Mensageria e filas
 
+### Instalar JRE 64bits
+
+Para evitar o problema no Kafka de OutOfMemory, é necessário instalar a versão 64bits do Java disponível nos dois links abaixo. Esse sistema foi testado no OS Windows 10
+* https://www.java.com/pt-BR/download/manual.jsp
+* https://javadl.oracle.com/webapps/download/AutoDL?BundleId=244584_d7fc238d0cbf4b0dac67be84580cfb4b
+
+Definir variável de ambiente JAVA_HOME
+1. No windows, em "Propriedades do Sistema" clicar em "Variáveis de Ambiente"
+2. Definir a variável para a nova instalação da JRE 64bits
+3. Nome da variável: `JAVA_HOME`
+4. Valor da variável: `C:\Program Files\Java\jre1.8.0_291` -> Neste caso substitua pelo diretório em que seu java 64bits está instalado
+
 ### Configurando Apache Kafka
 
-Baixar a versão do link abaixo e descompactar no diretório C:/. 
-
+Baixar a versão do link abaixo
 * https://ftp.unicamp.br/pub/apache/kafka/2.8.0/kafka_2.13-2.8.0.tgz
+
+Descompactar no diretório "C:/". Se utilizar outro diretório, na hora de executar, o windows pode reclamar que o caminho é muito longo para executar.
 
 O programa 7zip realiza realiza o descompactamento
 
@@ -78,12 +91,6 @@ O programa 7zip realiza realiza o descompactamento
 Ao descompactar, irá gerar um arquivo chamado "kafka_2.13-2.8.0.tar". Também é necessário descompatar esse arquivo utilizando o 7zip.
 
 O resultado final será um diretório chamado "kafka_2.13-2.8.0"
-
-Definir variável de ambiente JAVA_HOME
-1. No windows, em "Propriedades do Sistema" clicar em "Variáveis de Ambiente"
-2. Definir a variável caso ainda não esteja definida
-3. Nome da variável: `JAVA_HOME`
-4. Valor da variável: `C:\Program Files (x86)\Java\jre1.8.0_291` -> Neste caso substitua pelo diretório em que seu java está instalado
 
 Iniciar o zookeeper
 1. abrir prompt de comando do Windows (cmd)
@@ -97,22 +104,39 @@ Iniciar o zookeeper
 9. Se o Zookeeper foi iniciado com sucesso, uma das linhas exibidas no terminal será: `INFO binding to port 0.0.0.0/0.0.0.0:2181 (org.apache.zookeeper.server.NIOServerCnxnFactory)`
 11. Não fechar (apenas minimizar) este terminal pois o Zookeeper ficará sendo executado nele.
 
-Iniciar o zookeeper
+Iniciar o Kafka
 1. Abrir novo prompt de comando do Windows (cmd)
 2. executar o comando: `cd C:\kafka_2.13-2.8.0`
 3. executar o comando: `bin\windows\kafka-server-start.bat config\server.properties`
 4. Se o Kafka foi iniciado com sucesso, uma das linhas exibidas no terminal será: `INFO [KafkaServer id=0] started (kafka.server.KafkaServer)`
 5. Por padrão o kafka é executado na porta 9092
 
+#### Criar tópico via terminal
 
+Será criado um tópico via terminal pois a aplicação será responsável somente por enviar a mensagem.
+1. Abrir prompt de comando do Windows (cmd)
+2. Executar o comando: `cd C:\kafka_2.13-2.8.0`
+3. Executar o comando: `bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic NOVO_RESULTADO_VOTACAO`
+4. Se o topico for criado com sucesso, aparecerá a mensagem: `Created topic NOVO_RESULTADO_VOTACAO.`
+5. Para listar os tópicos, executar o comando `bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092`
 
+#### Iniciar consumidor via terminal
 
+Para facilitar o desenvolvimento, o consumidor das mensagens enviadas pela aplicação "Gerenciador de Assembleias para Votação" para o tópico criado no item acima, será o terminal do windows.
+1. Abrir prompt de comando do Windows (cmd)
+2. Executar o comando: `cd C:\kafka_2.13-2.8.0`
+3. Executar o comando: `bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic NOVO_RESULTADO_VOTACAO --from-beginning`
+4. Com o comando acima, o consumidor exibirá todas as mensagem que já foram enviadas e ficará ouvindo por novas mensagens
+5. Sempre que uma sessão de votação fechar, será enviada a mensagem para o kafka e será exibida neste terminal pelo consumidor
 
+#### Envio da mensagem pelo produtor
+A mensagem é enviada quando o sistema identifica que a sessão passou do prazo. 
 
+Para fins de simplificação, a validação do prazo é realizada quando alguma operação é feita na pauta, ou seja, quando algum dos serviços abaixo são executados:
+* /pauta/{id}
+* /voto/votar
 
-
-
-
+Desta forma, após abrir a sessão, para que a mesagem seja enviada, é necessário executar algum dos serviços acima após passar o horário da sessão.
 
 
 
