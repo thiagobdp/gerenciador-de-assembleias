@@ -2,7 +2,7 @@
 
 ## ⚙ Iniciando
 
-Clone este repositório em seu computador: https://github.com/thiagobdp/voting-sessions
+Clone este repositório em seu computador: https://github.com/thiagobdp/gerenciador-de-assembleias
 
 
 ## Configurando MySql
