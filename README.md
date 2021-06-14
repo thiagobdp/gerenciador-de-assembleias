@@ -96,7 +96,7 @@ Ao descompactar, irá gerar um arquivo chamado "kafka_2.13-2.8.0.tar". Também �
 
 O resultado final será um diretório chamado "kafka_2.13-2.8.0"
 
-Iniciar o zookeeper
+#### Iniciar o zookeeper
 1. abrir prompt de comando do Windows (cmd)
 2. executar o comando: `cd C:\kafka_2.13-2.8.0`
 3. executar o comando: `bin\windows\zookeeper-server-start.bat config\zookeeper.properties`
@@ -108,11 +108,11 @@ Iniciar o zookeeper
 9. Se o Zookeeper foi iniciado com sucesso, uma das linhas exibidas no terminal será: `INFO binding to port 0.0.0.0/0.0.0.0:2181 (org.apache.zookeeper.server.NIOServerCnxnFactory)`
 11. Não fechar (apenas minimizar) este terminal pois o Zookeeper ficará sendo executado nele.
 
-Iniciar o Kafka
+#### Iniciar o Kafka
 1. Abrir novo prompt de comando do Windows (cmd)
 2. executar o comando: `cd C:\kafka_2.13-2.8.0`
 3. executar o comando: `bin\windows\kafka-server-start.bat config\server.properties`
-4. Se o Kafka foi iniciado com sucesso, uma das linhas exibidas no terminal será: `INFO [KafkaServer id=0] started (kafka.server.KafkaServer)`
+4. Se o Kafka foi iniciado com sucesso pela primeira vez, uma das linhas exibidas no terminal será: `INFO [KafkaServer id=0] started (kafka.server.KafkaServer)`
 5. Por padrão o kafka é executado na porta 9092
 
 #### Criar tópico via terminal

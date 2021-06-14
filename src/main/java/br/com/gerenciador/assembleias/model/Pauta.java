@@ -26,7 +26,7 @@ import br.com.gerenciador.assembleias.controller.form.PautaForm;
 public class Pauta {
 
 	private static String TOPICO_NOVO_RESULTADO_VOTACAO = "NOVO_RESULTADO_VOTACAO";
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -136,7 +136,7 @@ public class Pauta {
 	 */
 	private void verificaSeFechaSessao() {
 		if (!this.sessaoFechada) {
-			if (LocalDateTime.now().isAfter(this.fimSessao)) {
+			if (this.fimSessao != null && LocalDateTime.now().isAfter(this.fimSessao)) {
 				this.sessaoFechada = true;
 				this.contabilizaVotos();
 				this.enviaMensagemNovoResultadoVotacao();
@@ -159,7 +159,7 @@ public class Pauta {
 			});
 		}
 	}
-	
+
 	private void enviaMensagemNovoResultadoVotacao() {
 		KafkaProducer<String, String> producer = new KafkaProducer<String, String>(this.properties());
 		String valores = this.id + "," + this.titulo + "," + this.verificaResultadoParaMensagem();
