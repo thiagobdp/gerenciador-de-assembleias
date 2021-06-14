@@ -22,7 +22,7 @@ public class Voto {
 	private Long id;
 
 	@NotNull
-	private Long cpf;
+	private String cpf;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -55,11 +55,11 @@ public class Voto {
 		this.id = id;
 	}
 
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 

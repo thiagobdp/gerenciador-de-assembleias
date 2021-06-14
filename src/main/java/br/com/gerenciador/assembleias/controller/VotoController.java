@@ -105,12 +105,12 @@ public class VotoController {
 		return ResponseEntity.created(uri).body(new VotoDto(voto));
 	}
 
-	private Boolean isUsuarioAbleToVote(Long cpf) {
+	private Boolean isUsuarioAbleToVote(String cpf) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		Map<String, String> param = new HashMap<String, String>();
-		param.put("cpf", cpf.toString());
+		param.put("cpf", cpf);
 
 		HttpEntity<ResultadoValidaUsuarioEnum> entity = new HttpEntity<ResultadoValidaUsuarioEnum>(headers);
 

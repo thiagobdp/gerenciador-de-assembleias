@@ -80,7 +80,7 @@ public class VotoControllerTest {
 		Long ultimaPautaID = this.obtemUltimaPautaID();		
 		String json = "{\r\n"
 				+ "  \"idPauta\":"+ultimaPautaID+",\r\n"
-				+ "  \"cpf\": 31791621392,\r\n"
+				+ "  \"cpf\": \"05517584900\",\r\n"
 				+ "  \"voto\": \"SIM\"\r\n"
 				+ "}";
 
@@ -96,7 +96,37 @@ public class VotoControllerTest {
 		String jsonReturnedCadastro = mvcResultCadastro.getResponse().getContentAsString();
 		
 		Long ultimoVotoID = this.obtemUltimoVotoID();
-		String jsonExpectedCadastro = "{\"id\":"+ultimoVotoID+",\"cpf\":31791621392,\"voto\":\"SIM\",\"pautaId\":"+ultimaPautaID+"}";
+		String jsonExpectedCadastro = "{\"id\":"+ultimoVotoID+",\"cpf\":\"05517584900\",\"voto\":\"SIM\",\"pautaId\":"+ultimaPautaID+"}";
+
+		JSONAssert.assertEquals(jsonExpectedCadastro, jsonReturnedCadastro, JSONCompareMode.LENIENT);
+	}
+	
+	@Test
+	public void testVotarComSucessoCPFiniciaComZero() throws Exception {
+		this.abreSessao();
+		
+		URI uri = new URI("/voto/votar");
+
+		Long ultimaPautaID = this.obtemUltimaPautaID();		
+		String json = "{\r\n"
+				+ "  \"idPauta\":"+ultimaPautaID+",\r\n"
+				+ "  \"cpf\": \"05517584900\",\r\n"
+				+ "  \"voto\": \"SIM\"\r\n"
+				+ "}";
+
+		MvcResult mvcResultCadastro = mockMvc.perform(MockMvcRequestBuilders//
+				.post(uri)//
+				.content(json)//
+				.contentType(MediaType.APPLICATION_JSON))//
+				.andExpect(MockMvcResultMatchers//
+						.status()//
+						.isCreated())
+				.andReturn();
+
+		String jsonReturnedCadastro = mvcResultCadastro.getResponse().getContentAsString();
+		
+		Long ultimoVotoID = this.obtemUltimoVotoID();
+		String jsonExpectedCadastro = "{\"id\":"+ultimoVotoID+",\"cpf\":\"05517584900\",\"voto\":\"SIM\",\"pautaId\":"+ultimaPautaID+"}";
 
 		JSONAssert.assertEquals(jsonExpectedCadastro, jsonReturnedCadastro, JSONCompareMode.LENIENT);
 	}
@@ -111,7 +141,7 @@ public class VotoControllerTest {
 		
 		String json = "{\r\n"
 				+ "  \"idPauta\":"+ultimaPautaID+",\r\n"
-				+ "  \"cpf\": 31791621392,\r\n"
+				+ "  \"cpf\": \"05517584900\",\r\n"
 				+ "  \"voto\": \"SIM\"\r\n"
 				+ "}";
 
@@ -143,7 +173,7 @@ public class VotoControllerTest {
 
 		String json = "{\r\n"
 				+ "  \"idPauta\":99999,\r\n"
-				+ "  \"cpf\": 31791621392,\r\n"
+				+ "  \"cpf\": \"05517584900\",\r\n"
 				+ "  \"voto\": \"SIM\"\r\n"
 				+ "}";
 
@@ -163,7 +193,7 @@ public class VotoControllerTest {
 
 		String json = "{\r\n"
 				+ "  \"idPauta\":1,\r\n"
-				+ "  \"cpf\": 317911621392,\r\n"
+				+ "  \"cpf\": \"05117584900\",\r\n"
 				+ "  \"voto\": \"SIM\"\r\n"
 				+ "}";
 
@@ -183,7 +213,7 @@ public class VotoControllerTest {
 
 		String json = "{\r\n"
 				+ "  \"idPauta\":"+this.obtemUltimaPautaID()+",\r\n"
-				+ "  \"cpf\": 31791621392,\r\n"
+				+ "  \"cpf\": \"05517584900\",\r\n"
 				+ "  \"voto\": \"SIM\"\r\n"
 				+ "}";
 
@@ -211,7 +241,7 @@ public class VotoControllerTest {
 				.andReturn();
 
 		JSONArray jsonReturnedCadastro = new JSONArray(mvcResultCadastro.getResponse().getContentAsString());
-		JSONArray jsonExpectedCadastro = new JSONArray("[{\"id\":"+this.obtemUltimoVotoID()+",\"cpf\":31791621392,\"voto\":\"SIM\",\"pautaId\":"+this.obtemUltimaPautaID()+"}]");
+		JSONArray jsonExpectedCadastro = new JSONArray("[{\"id\":"+this.obtemUltimoVotoID()+",\"cpf\":\"05517584900\",\"voto\":\"SIM\",\"pautaId\":"+this.obtemUltimaPautaID()+"}]");
 
 		Assert.assertTrue(jsonReturnedCadastro.length()>0);
 		JSONAssert.assertEquals(jsonExpectedCadastro.get(0).toString(), jsonReturnedCadastro.get(0).toString(), JSONCompareMode.LENIENT);
@@ -275,7 +305,7 @@ public class VotoControllerTest {
 		Long ultimaPautaID = this.obtemUltimaPautaID();		
 		String json = "{\r\n"
 				+ "  \"idPauta\":"+ultimaPautaID+",\r\n"
-				+ "  \"cpf\": 31791621392,\r\n"
+				+ "  \"cpf\": \"05517584900\",\r\n"
 				+ "  \"voto\": \"SIM\"\r\n"
 				+ "}";
 
@@ -291,7 +321,7 @@ public class VotoControllerTest {
 		String jsonReturnedCadastro = mvcResultCadastro.getResponse().getContentAsString();
 		
 		Long ultimoVotoID = this.obtemUltimoVotoID();
-		String jsonExpectedCadastro = "{\"id\":"+ultimoVotoID+",\"cpf\":31791621392,\"voto\":\"SIM\",\"pautaId\":"+ultimaPautaID+"}";
+		String jsonExpectedCadastro = "{\"id\":"+ultimoVotoID+",\"cpf\":\"05517584900\",\"voto\":\"SIM\",\"pautaId\":"+ultimaPautaID+"}";
 
 		JSONAssert.assertEquals(jsonExpectedCadastro, jsonReturnedCadastro, JSONCompareMode.LENIENT);
 	}

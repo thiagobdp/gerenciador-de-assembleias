@@ -12,7 +12,7 @@ public class VotoDto {
 	private Long id;
 	
 	@ApiModelProperty(value="CPF do usuário que realizou o voto")
-	private Long cpf;
+	private String cpf;
 	
 	@ApiModelProperty(value="Voto do usuário")
 	private VotoEnum voto;
@@ -43,7 +43,7 @@ public class VotoDto {
 		return id;
 	}
 
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
