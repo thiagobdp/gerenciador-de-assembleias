@@ -75,7 +75,10 @@ public class VotoController {
 	@Transactional
 	@PostMapping(consumes = { "application/json" }, value = "/votar", produces = { "application/json" })
 	public ResponseEntity<VotoDto> votar(@RequestBody @Valid VotoForm votoForm, UriComponentsBuilder uriBuilder) {
-
+				
+		//remove caracteres de formatação de CPF
+		votoForm.setCpf(votoForm.getCpf().strip().replaceAll("\\.", "").replaceAll("-", ""));
+		
 		if (!this.isUsuarioAbleToVote(votoForm.getCpf())) {
 			throw new IllegalStateException("Usuário CPF '" + votoForm.getCpf() + "' não tem permissão para votar.");
 		}
