@@ -50,9 +50,7 @@ public class VotoController {
 	VotoRepository votoRepository;
 
 	@ApiOperation(value = "Lista todos os votos realziados")
-	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Retorna a lista de Votos")
-		})
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna a lista de Votos") })
 	@GetMapping(produces = { "application/json" })
 	public List<VotoDto> listar() {
 		return votoRepository.findAll().stream().map(voto -> VotoDto.converter(voto)).collect(Collectors.toList());
@@ -67,18 +65,13 @@ public class VotoController {
 	 * @return
 	 */
 	@ApiOperation(value = "Realiza o voto de um usuário")
-	@ApiResponses(value = {
-		    @ApiResponse(code = 500, message = "Alguma exceção é lançada por erro de negócio"),
-		    @ApiResponse(code = 404, message = "Pauta não foi encontrada"),
-		    @ApiResponse(code = 201, message = "Voto realizado com sucesso. Retorna o novo voto.")
-		})
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Alguma exceção é lançada por erro de negócio"),
+			@ApiResponse(code = 404, message = "Pauta não foi encontrada"),
+			@ApiResponse(code = 201, message = "Voto realizado com sucesso. Retorna o novo voto.") })
 	@Transactional
 	@PostMapping(consumes = { "application/json" }, value = "/votar", produces = { "application/json" })
 	public ResponseEntity<VotoDto> votar(@RequestBody @Valid VotoForm votoForm, UriComponentsBuilder uriBuilder) {
-				
-		//remove caracteres de formatação de CPF
-		votoForm.setCpf(votoForm.getCpf().strip().replaceAll("\\.", "").replaceAll("-", ""));
-		
+
 		if (!this.isUsuarioAbleToVote(votoForm.getCpf())) {
 			throw new IllegalStateException("Usuário CPF '" + votoForm.getCpf() + "' não tem permissão para votar.");
 		}
@@ -126,8 +119,8 @@ public class VotoController {
 //			System.out.println(ex.getMessage());
 //			System.out.println(ex);
 		} catch (HttpClientErrorException e) {
-			if (e.getStatusCode().compareTo(HttpStatus.NOT_FOUND)==0) {
-				throw new IllegalStateException("CPF: '"+cpf+"' é inválido");
+			if (e.getStatusCode().compareTo(HttpStatus.NOT_FOUND) == 0) {
+				throw new IllegalStateException("CPF: '" + cpf + "' é inválido");
 			} else {
 				throw e;
 			}

@@ -7,10 +7,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class VotoForm {
 
-	@ApiModelProperty(value="CPF do usuário que está realizando o voto")
+	@ApiModelProperty(value = "CPF do usuário que está realizando o voto")
 	private String cpf;
-	
-	@ApiModelProperty(value="Identificação da Pauta no banco de dados")
+
+	@ApiModelProperty(value = "Identificação da Pauta no banco de dados")
 	private Long idPauta;
 
 	@NotNull
@@ -21,7 +21,8 @@ public class VotoForm {
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		// remove caracteres de formatação de CPF
+		this.cpf = cpf.strip().replaceAll("\\.", "").replaceAll("-", "");
 	}
 
 	public VotoEnum getVoto() {
