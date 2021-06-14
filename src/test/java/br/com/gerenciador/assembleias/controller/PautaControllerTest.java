@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @TestMethodOrder(OrderAnnotation.class)
-class PautaControllerTest {
+public class PautaControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
