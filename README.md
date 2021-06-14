@@ -142,6 +142,16 @@ Para fins de simplificação, a validação do prazo é realizada quando alguma 
 
 Desta forma, após abrir a sessão, para que a mesagem seja enviada, é necessário executar algum dos serviços acima após passar o horário da sessão.
 
+## 🔬 Running Tests
 
+Foram criados testes automatizados para todos Controller, tendo:
+* PautaController - 100% de cobertura
+* VotoController - 87,2% de cobertura
+
+Resultando no total de cobertura de teste do sistema em 85,9%.
+
+Utilize Manven Test para executar todos teste juntos. No Eclipse IDE, clique com o botão direito do mouse "pom.xml" -> "Run as" -> "Maven test".
+
+Os teste utiliza o profile "test", então as operações serão executadas no banco em memório H2 e não no MySQL, assim isola os testes dos dados reais da aplicação.
 
 
