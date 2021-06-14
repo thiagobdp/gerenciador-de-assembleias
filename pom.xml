@@ -78,6 +78,12 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
+		<!-- para converter JSON para Java LocalDate e LocalDateTime-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

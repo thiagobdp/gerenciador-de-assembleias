@@ -31,6 +31,10 @@ public class VotoDto {
 		this.pautaId = voto.getPauta().getId();
 	}
 
+	public VotoDto() {
+		super();
+	}
+
 	public static VotoDto converter(Voto voto) {
 		return new VotoDto(voto);
 	}

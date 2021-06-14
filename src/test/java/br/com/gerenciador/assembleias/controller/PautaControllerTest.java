@@ -116,7 +116,7 @@ public class PautaControllerTest {
 
 	@Test
 	public void testDetalhesPauta() throws Exception {
-		Long ultimoIDpauta = this.obtemUltimoID();
+		Long ultimoIDpauta = this.obtemUltimaPautaID();
 		MvcResult mvcResultLista = mockMvc.perform(MockMvcRequestBuilders//
 
 				.get("/pauta/{id}", ultimoIDpauta)//
@@ -146,7 +146,7 @@ public class PautaControllerTest {
 	public void testAbrirSessaoComSucesso() throws Exception {
 		String json = "{\r\n" + "  \"duracaoEmHoras\": 0,\r\n" + "  \"duracaoEmMinutos\": 5\r\n" + "}";
 
-		Long ultimoID = this.obtemUltimoID();
+		Long ultimoID = this.obtemUltimaPautaID();
 
 		mockMvc.perform(MockMvcRequestBuilders//
 				.put("/pauta/{id}/abrirsessao", ultimoID)// .
@@ -169,7 +169,7 @@ public class PautaControllerTest {
 
 	@Test
 	public void testAbrirSessaoJaAberta() throws Exception {
-		Long ultimoIDpauta = this.obtemUltimoID();
+		Long ultimoIDpauta = this.obtemUltimaPautaID();
 		// abre a sessao
 		String json = "{\r\n" + "  \"duracaoEmHoras\": 0,\r\n" + "  \"duracaoEmMinutos\": 5\r\n" + "}";
 		mockMvc.perform(MockMvcRequestBuilders//
@@ -189,7 +189,7 @@ public class PautaControllerTest {
 						.isBadRequest());
 	}
 
-	private Long obtemUltimoID() throws Exception {
+	private Long obtemUltimaPautaID() throws Exception {
 		URI uri = new URI("/pauta");
 		MvcResult mvcResultLista = mockMvc.perform(MockMvcRequestBuilders//
 				.get(uri)//
