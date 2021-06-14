@@ -142,7 +142,7 @@ Para fins de simplificação, a validação do prazo é realizada quando alguma 
 
 Desta forma, após abrir a sessão, para que a mesagem seja enviada, é necessário executar algum dos serviços acima após passar o horário da sessão.
 
-## 🔬 Running Tests
+## 🔬 Testes automatizados de integração
 
 Foram criados testes automatizados para todos Controller, tendo:
 * PautaController - 100% de cobertura
