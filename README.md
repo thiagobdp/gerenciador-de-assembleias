@@ -53,19 +53,16 @@ Criado o sistema de votação de assembleias.
 É possível consultar a documentação Swagger pelo link abaixo quando executando em localhost:
 * http://localhost:8080/swagger-ui.html
 
-Ações disponíveis:
-* 
-
 ## Tarefa Bônus 1 - Integração com sistemas externos
 
 Criei o projeto git abaixo para servir como sistema externo para integração
 * https://github.com/thiagobdp/gerenciador-de-usuario
 
 O serviço está disponível na URL
-* https://thiagobdpusuarioscpf.herokuapp.com/users/{cpf}
+* https://thiagobdp-usuarios-cpf.herokuapp.com/users/{cpf}
 
 E a documentação Swagger está disponível na URL
-* https://thiagobdpusuarioscpf.herokuapp.com/swagger-ui.html
+* https://thiagobdp-usuarios-cpf.herokuapp.com/swagger-ui.html
 
 Ao realizar o voto, o sistema validará nessa API externa se o CPF informado é válido. Caso seja valido, retornará permitindo o voto. Caso seja inválido, retornará erro.
 

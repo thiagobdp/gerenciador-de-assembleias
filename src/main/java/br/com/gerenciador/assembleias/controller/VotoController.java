@@ -41,7 +41,7 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/voto")
 public class VotoController {
 
-	private static final String USER_VALIDA_CPF = "https://thiagobdpusuarioscpf.herokuapp.com/users/{cpf}";
+	private static final String USER_VALIDA_CPF = "https://thiagobdp-usuarios-cpf.herokuapp.com/users/{cpf}";
 
 	@Autowired
 	PautaRepository pautaRepository;
