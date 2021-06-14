@@ -152,6 +152,6 @@ Resultando no total de cobertura de teste do sistema em 85,9%.
 
 Utilize Manven Test para executar todos teste juntos. No Eclipse IDE, clique com o botão direito do mouse "pom.xml" -> "Run as" -> "Maven test".
 
-Os teste utiliza o profile "test", então as operações serão executadas no banco em memório H2 e não no MySQL, assim isola os testes dos dados reais da aplicação.
+Os testes utilizam o profile "test", e as operações são executadas no banco de dados em memória H2 e não no MySQL, assim isola os testes dos dados reais da aplicação.
 
 
