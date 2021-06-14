@@ -37,7 +37,7 @@ public class Voto {
 
 	public Voto(VotoForm votoForm, Pauta pauta) {
 		super();
-		this.cpf = votoForm.getCpf();
+		this.setCpf(votoForm.getCpf());
 		this.voto = votoForm.getVoto();
 		this.dataHoraVoto = LocalDateTime.now();
 		this.pauta = pauta;
@@ -60,7 +60,7 @@ public class Voto {
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		this.cpf = cpf.strip().replaceAll("\\.", "").replaceAll("-", "");
 	}
 
 	public VotoEnum getVoto() {
