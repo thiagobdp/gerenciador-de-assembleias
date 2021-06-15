@@ -63,8 +63,8 @@ public class VotoController {
 	 * @return
 	 */
 	@ApiOperation(value = "Realiza o voto de um usuário")
-	@ApiResponses(value = { @ApiResponse(code = 500, message = "Alguma exceção é lançada por erro de negócio"),
-			@ApiResponse(code = 404, message = "Pauta não foi encontrada"),
+	@ApiResponses(value = { @ApiResponse(code = 400, message = "Alguma exceção é lançada por erro de negócio"),
+			@ApiResponse(code = 404, message = "Pauta não foi encontrada ou CPF inválido"),
 			@ApiResponse(code = 201, message = "Voto realizado com sucesso. Retorna o novo voto.") })
 	@Transactional
 	@PostMapping(consumes = { "application/json" }, value = "/votar", produces = { "application/json" })

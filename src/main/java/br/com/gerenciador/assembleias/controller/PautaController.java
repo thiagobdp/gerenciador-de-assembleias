@@ -82,7 +82,7 @@ public class PautaController {
 	@ApiResponses(value = {
 		    @ApiResponse(code = 200, message = "Sessão aberta com sucesso. Retorna a pauta da sessão que foi aberta."),
 		    @ApiResponse(code = 404, message = "Pauta não encontrada."),
-		    @ApiResponse(code = 500, message = "Sessão já está aberta.")
+		    @ApiResponse(code = 400, message = "Sessão já está aberta.")
 		})
 	@Transactional
 	@PutMapping(consumes = { "application/json" }, value = "/{id}/abrirsessao", produces = { "application/json" })

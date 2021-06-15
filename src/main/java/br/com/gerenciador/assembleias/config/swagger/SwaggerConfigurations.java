@@ -33,35 +33,30 @@ public class SwaggerConfigurations {
 				.apiInfo(this.apiInfo());
 	}
 
+	/**
+	 * Deixa o swagger sem retorno padrão, assim será utilizado somente os retornos
+	 * documentados em cada endpoint *
+	 */
 	private List<ResponseMessage> responseMessageForGET() {
 		return new ArrayList<ResponseMessage>() {
-			{//
-				add(new ResponseMessageBuilder()//
-						.code(500)//
-						.message("500 message")//
-//						.responseModel(new ModelRef("Error"))//
-						.build());				
+			{
 			}
 		};
 	}
-	
+
+	/**
+	 * Deixa o swagger sem retorno padrão, assim será utilizado somente os retornos
+	 * documentados em cada endpoint *
+	 */
 	private List<ResponseMessage> responseMessageForPOST() {
 		return new ArrayList<ResponseMessage>() {
-			{//
-				add(new ResponseMessageBuilder()//
-						.code(500)//
-						.message("500 message")//
-//						.responseModel(new ModelRef("Error"))//
-						.build());				
+			{
 			}
 		};
 	}
 
 	private ApiInfo apiInfo() {
-	    return new ApiInfoBuilder()
-	            .title("Gerenciador de Assembleias REST API")
-	            .description("Gerencia as pautas e votações.")
-	            .version("1.0.0")	            
-	            .build();
+		return new ApiInfoBuilder().title("Gerenciador de Assembleias REST API")
+				.description("Gerencia as pautas e votações.").version("1.0.0").build();
 	}
 }
