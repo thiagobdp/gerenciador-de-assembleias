@@ -87,9 +87,18 @@ public class Voto {
 		this.pauta = pauta;
 	}
 
-	public static Voto votar(@Valid VotoForm votoForm, Pauta pauta) {
+	/**
+	 * Realiza o voto do CPF.
+	 * 
+	 * @param votoForm
+	 * @param pauta
+	 * @return Retorna objeto representando novo voto realizado. Caso usuário já
+	 *         tenha vota, lança exceção.
+	 */
+	public static Voto realizarVotar(@Valid VotoForm votoForm, Pauta pauta) {
 		if (pauta.getVotos().stream().filter(voto -> voto.getCpf().compareTo(votoForm.getCpf()) == 0).count() != 0) {
-			return null;
+			throw new IllegalStateException(
+					"Não é possível votar pois o CPF:" + votoForm.getCpf() + " já realizou o voto.");
 		} else {
 			return new Voto(votoForm, pauta);
 		}

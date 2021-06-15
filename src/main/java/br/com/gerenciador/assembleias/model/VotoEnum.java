@@ -1,7 +1,7 @@
 package br.com.gerenciador.assembleias.model;
 
 public enum VotoEnum {
-	SIM("S"),
+	SIM("S"), //
 	NAO("N");
 
 	private String type = new String();

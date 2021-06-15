@@ -47,8 +47,9 @@ public class VotoController {
 	@Autowired
 	VotoRepository votoRepository;
 
-	@ApiOperation(value = "Lista todos os votos realziados")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna a lista de Votos") })
+	@ApiOperation(value = "Lista todos os votos realizados")
+	@ApiResponses(value = { //
+			@ApiResponse(code = 200, message = "Retorna a lista de Votos") })
 	@GetMapping(produces = { "application/json" })
 	public List<VotoDto> listar() {
 		return votoRepository.findAll().stream().map(voto -> VotoDto.converter(voto)).collect(Collectors.toList());
@@ -63,7 +64,8 @@ public class VotoController {
 	 * @return
 	 */
 	@ApiOperation(value = "Realiza o voto de um usuário")
-	@ApiResponses(value = { @ApiResponse(code = 400, message = "Alguma exceção é lançada por erro de negócio"),
+	@ApiResponses(value = { //
+			@ApiResponse(code = 400, message = "Alguma exceção é lançada por erro de negócio"),
 			@ApiResponse(code = 404, message = "Pauta não foi encontrada ou CPF inválido"),
 			@ApiResponse(code = 201, message = "Voto realizado com sucesso. Retorna o novo voto.") })
 	@Transactional
@@ -88,36 +90,42 @@ public class VotoController {
 			throw new IllegalStateException("Não é possível votar pois a sessão já está fechada.");
 		}
 
-		Voto voto = Voto.votar(votoForm, pauta);
-		if (voto == null) {
-			throw new IllegalStateException(
-					"Não é possível votar pois o CPF:" + votoForm.getCpf() + " já realizou o voto.");
-		}
+		Voto votoSalvo = this.votoRepository.save(Voto.realizarVotar(votoForm, pauta));
 
-		Voto votoSalvo = this.votoRepository.save(voto);
 		URI uri = uriBuilder.path("/voto/{id}").buildAndExpand(votoSalvo.getId()).toUri();
-		return ResponseEntity.created(uri).body(new VotoDto(voto));
+
+		return ResponseEntity.created(uri).body(new VotoDto(votoSalvo));
 	}
 
+	/**
+	 * consulta sistema externo que verifica se o CPF é valido e se tem permissão
+	 * para votar
+	 * 
+	 * @param cpf
+	 * @return se CPF inválido, retorna 404 Not Found. Caso contrário, TRUE/FALSE
+	 *         conforme pode ou não votar
+	 */
 	private Boolean isUsuarioAbleToVote(String cpf) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		Map<String, String> param = new HashMap<String, String>();
-		param.put("cpf", cpf);
-
 		HttpEntity<ResultadoValidaUsuarioEnum> entity = new HttpEntity<ResultadoValidaUsuarioEnum>(headers);
 
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<ResultadoValidaUsuarioEnum> result = null;
 
-		result = restTemplate.exchange(USER_VALIDA_CPF, HttpMethod.GET, entity, ResultadoValidaUsuarioEnum.class,
-				param);
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("cpf", cpf);
+
+		ResponseEntity<ResultadoValidaUsuarioEnum> result = restTemplate.exchange(USER_VALIDA_CPF, HttpMethod.GET,
+				entity, ResultadoValidaUsuarioEnum.class, param);
 
 		if (ResultadoValidaUsuarioEnum.ABLE_TO_VOTE.compareTo(result.getBody()) == 0) {
 			return true;
-		} else {
+		} else if (ResultadoValidaUsuarioEnum.UNABLE_TO_VOTE.compareTo(result.getBody()) == 0) {
 			return false;
+		} else {
+			throw new IllegalStateException(
+					"Serviço USER_VALIDA_CPF retornou resultado inesperado: " + result.getBody());
 		}
 	}
 }

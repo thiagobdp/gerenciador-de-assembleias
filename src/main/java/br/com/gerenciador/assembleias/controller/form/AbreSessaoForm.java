@@ -6,11 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class AbreSessaoForm {
 
-	@ApiModelProperty(value="Quantidade de horas para duração da sessão")
+	@ApiModelProperty(value = "Quantidade de horas para duração da sessão")
 	@NotNull
 	private Long duracaoEmHoras;
-	
-	@ApiModelProperty(value="Quantidade de minutos para duração da sessão")
+
+	@ApiModelProperty(value = "Quantidade de minutos para duração da sessão")
 	@NotNull
 	private Long duracaoEmMinutos;
 

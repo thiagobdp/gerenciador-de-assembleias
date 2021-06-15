@@ -131,8 +131,9 @@ public class Pauta {
 	}
 
 	/**
-	 * Verifica se deve fechar a sessão. Caso esteja aberta porém já tenha passado o
-	 * horário de fechamento, realiza o fechamento e calcula o resultado dos votos *
+	 * Verifica se deve fechar a sessão. Caso esteja aberta, porém já tenha passado
+	 * o horário de fechamento, realiza o fechamento e calcula o resultado dos
+	 * votos.
 	 */
 	private void verificaSeFechaSessao() {
 		if (!this.sessaoFechada) {
@@ -145,8 +146,8 @@ public class Pauta {
 	}
 
 	/**
-	 * Soma os votos e armazena o resultado final. Assim realizar a soma somente uma
-	 * vez e armazena a contagem nas variáveis.
+	 * Soma os votos e armazena o resultado final. Desta forma realiza a soma
+	 * somente uma vez e armazena a contagem nas propriedades.
 	 */
 	private void contabilizaVotos() {
 		if (this.qtdVotosSim.compareTo(0) == 0 && this.qtdVotosSim.compareTo(0) == 0) {
@@ -160,6 +161,9 @@ public class Pauta {
 		}
 	}
 
+	/**
+	 * Envia mensagem com o resultado para o Apache Kafka
+	 */
 	private void enviaMensagemNovoResultadoVotacao() {
 		KafkaProducer<String, String> producer = new KafkaProducer<String, String>(this.properties());
 		String valores = this.id + "," + this.titulo + "," + this.verificaResultadoParaMensagem();
@@ -179,6 +183,11 @@ public class Pauta {
 		}
 	}
 
+	/**
+	 * Propriedades para o Apache Kafka
+	 * 
+	 * @return
+	 */
 	private Properties properties() {
 		Properties properties = new Properties();
 		properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");

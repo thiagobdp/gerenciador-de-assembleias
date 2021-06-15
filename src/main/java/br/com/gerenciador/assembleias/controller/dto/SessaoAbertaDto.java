@@ -7,15 +7,15 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class SessaoAbertaDto {
 
-	@ApiModelProperty(value="Identificação da Pauta no banco de dados")
+	@ApiModelProperty(value = "Identificação da Pauta no banco de dados")
 	private Long id;
-	
-	@ApiModelProperty(value="Hora em que a sessão foi iniciada")
+
+	@ApiModelProperty(value = "Hora em que a sessão foi iniciada")
 	private LocalDateTime inicioSessao;
-	
-	@ApiModelProperty(value="Hora em que a sessão será fechada")
+
+	@ApiModelProperty(value = "Hora em que a sessão será fechada")
 	private LocalDateTime fimSessao;
-	
+
 	public static SessaoAbertaDto converter(Pauta pauta) {
 		SessaoAbertaDto sessaoAberta = new SessaoAbertaDto();
 		sessaoAberta.setId(pauta.getId());
@@ -47,7 +47,5 @@ public class SessaoAbertaDto {
 	public void setFimSessao(LocalDateTime fim) {
 		this.fimSessao = fim;
 	}
-
-	
 
 }

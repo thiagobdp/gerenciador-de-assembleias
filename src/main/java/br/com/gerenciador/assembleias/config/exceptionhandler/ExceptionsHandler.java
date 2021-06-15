@@ -1,4 +1,4 @@
-package br.com.gerenciador.assembleias.config.validation;
+package br.com.gerenciador.assembleias.config.exceptionhandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 
 @RestControllerAdvice
-public class ErroDeValidacaoHandler {
+public class ExceptionsHandler {
 
 	@Autowired
 	private MessageSource messageSource;
@@ -35,10 +35,16 @@ public class ErroDeValidacaoHandler {
 		return dto;
 	}
 
-	
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	@ExceptionHandler(HttpClientErrorException.NotFound.class)
-	public String handle(HttpClientErrorException exception) {				
+	public String handle(HttpClientErrorException exception) {
 		return exception.getResponseBodyAsString();
+	}
+
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(IllegalStateException.class)
+	public String handle(IllegalStateException exception) {
+
+		return exception.getMessage();
 	}
 }

@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.ResponseMessageBuilder;
-import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
@@ -33,12 +31,22 @@ public class SwaggerConfigurations {
 				.apiInfo(this.apiInfo());
 	}
 
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title("Gerenciador de Assembleias REST API")
+				.description("Gerencia as pautas e votações.").version("1.0.0").build();
+	}
+	
 	/**
 	 * Deixa o swagger sem retorno padrão, assim será utilizado somente os retornos
 	 * documentados em cada endpoint *
 	 */
 	private List<ResponseMessage> responseMessageForGET() {
 		return new ArrayList<ResponseMessage>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1482012757114476160L;
+
 			{
 			}
 		};
@@ -50,13 +58,13 @@ public class SwaggerConfigurations {
 	 */
 	private List<ResponseMessage> responseMessageForPOST() {
 		return new ArrayList<ResponseMessage>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4223859476965450417L;
+
 			{
 			}
 		};
-	}
-
-	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Gerenciador de Assembleias REST API")
-				.description("Gerencia as pautas e votações.").version("1.0.0").build();
-	}
+	}	
 }

@@ -7,28 +7,28 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class PautaDetalhesDto {
 
-	@ApiModelProperty(value="Identificação da Pauta no banco de dados")
+	@ApiModelProperty(value = "Identificação da Pauta no banco de dados")
 	private Long id;
-	
-	@ApiModelProperty(value="Título da Pauta")
+
+	@ApiModelProperty(value = "Título da Pauta")
 	private String titulo;
-	
-	@ApiModelProperty(value="Descrição da Pauta")
+
+	@ApiModelProperty(value = "Descrição da Pauta")
 	private String descricao;
-	
-	@ApiModelProperty(value="Hora em que a sessão foi iniciada")
+
+	@ApiModelProperty(value = "Hora em que a sessão foi iniciada")
 	private LocalDateTime inicioSessao;
-	
-	@ApiModelProperty(value="Hora em que a sessão será fechada")
+
+	@ApiModelProperty(value = "Hora em que a sessão será fechada")
 	private LocalDateTime fimSessao;
-	
-	@ApiModelProperty(value="Quantidade de votos SIM")
+
+	@ApiModelProperty(value = "Quantidade de votos SIM")
 	private Integer qtdVotosSim;
-	
-	@ApiModelProperty(value="Quantidade de votos NÃO")
+
+	@ApiModelProperty(value = "Quantidade de votos NÃO")
 	private Integer qtdVotosNao;
-	
-	@ApiModelProperty(value="Identifica se a sessão já está fechada")
+
+	@ApiModelProperty(value = "Identifica se a sessão já está fechada")
 	private Boolean sessaoFechada;
 
 	public static PautaDetalhesDto converter(Pauta pauta) {
@@ -41,7 +41,7 @@ public class PautaDetalhesDto {
 		dto.setFimSessao(pauta.getFimSessao());
 		dto.setQtdVotosSim(pauta.getQtdVotosSim());
 		dto.setQtdVotosNao(pauta.getQtdVotosNao());
-		dto.setSessaoFechada(pauta.getSessaoFechada());		
+		dto.setSessaoFechada(pauta.getSessaoFechada());
 		return dto;
 	}
 

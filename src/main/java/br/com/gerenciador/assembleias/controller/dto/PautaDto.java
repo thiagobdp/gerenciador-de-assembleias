@@ -5,13 +5,13 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class PautaDto {
 
-	@ApiModelProperty(value="Identificação da Pauta no banco de dados")
+	@ApiModelProperty(value = "Identificação da Pauta no banco de dados")
 	private Long id;
 
-	@ApiModelProperty(value="Título da Pauta")
+	@ApiModelProperty(value = "Título da Pauta")
 	private String titulo;
 
-	@ApiModelProperty(value="Descrição da Pauta")
+	@ApiModelProperty(value = "Descrição da Pauta")
 	private String descricao;
 
 	public static PautaDto converter(Pauta pauta) {

@@ -1,4 +1,4 @@
-package br.com.gerenciador.assembleias.config.validation;
+package br.com.gerenciador.assembleias.config.exceptionhandler;
 
 public class ErroDeFormularioDto {
 

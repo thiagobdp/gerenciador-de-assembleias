@@ -40,11 +40,10 @@ public class PautaController {
 
 	@Autowired
 	VotoRepository votoRepository;
-		
+
 	@ApiOperation(value = "Lista todas as pautas cadastradas")
-	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Retorna a lista de Pautas")
-		})
+	@ApiResponses(value = { //
+			@ApiResponse(code = 200, message = "Retorna a lista de Pautas") })
 	@GetMapping(produces = { "application/json" })
 	public List<PautaDto> listar() {
 		return pautaRepository.findAll().stream().map(pauta -> PautaDto.converter(pauta)).collect(Collectors.toList());
@@ -56,15 +55,15 @@ public class PautaController {
 	 * @param pautaForm
 	 * @return
 	 */
-	@ApiOperation(value = "Cadastra nova Pauta")
-	@ApiResponses(value = {
-		    @ApiResponse(code = 201, message = "Retorna a Pauta que foi cadastrada")
-		})
+	@ApiOperation(value = "Cadastra nova Pauta. Permite títulos e descrições repetidas")
+	@ApiResponses(value = { //
+			@ApiResponse(code = 201, message = "Retorna a Pauta que foi cadastrada") })
 	@Transactional
 	@PostMapping(consumes = { "application/json" }, produces = { "application/json" })
-	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaForm pautaForm, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<PautaDto> cadastrar(@RequestBody @Valid PautaForm pautaForm,
+			UriComponentsBuilder uriBuilder) {
 		Pauta pauta = pautaRepository.save(new Pauta(pautaForm));
-		
+
 		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(pauta.getId()).toUri();
 		return ResponseEntity.created(uri).body(PautaDto.converter(pauta));
 	}
@@ -74,16 +73,15 @@ public class PautaController {
 	 * erro.
 	 * 
 	 * @param id             da pauta
-	 * @param abreSessaoForm é opcinal, porém se informado, precisa informar todos os
-	 *                       campos, mesmo que informe zero
+	 * @param abreSessaoForm é opcinal, porém se informado, precisa informar todos
+	 *                       os campos, mesmo que informe zero
 	 * @return
 	 */
 	@ApiOperation(value = "Abre uma sessão para votação")
-	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Sessão aberta com sucesso. Retorna a pauta da sessão que foi aberta."),
-		    @ApiResponse(code = 404, message = "Pauta não encontrada."),
-		    @ApiResponse(code = 400, message = "Sessão já está aberta.")
-		})
+	@ApiResponses(value = { //
+			@ApiResponse(code = 200, message = "Sessão aberta com sucesso. Retorna a pauta com a sessão aberta."),
+			@ApiResponse(code = 404, message = "Pauta não encontrada."),
+			@ApiResponse(code = 400, message = "Sessão já está aberta.") })
 	@Transactional
 	@PutMapping(consumes = { "application/json" }, value = "/{id}/abrirsessao", produces = { "application/json" })
 	public ResponseEntity<SessaoAbertaDto> abrirSessao(@PathVariable Long id,
@@ -106,10 +104,9 @@ public class PautaController {
 	}
 
 	@ApiOperation(value = "Consulta os detalhes de uma pauta")
-	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "Retorna os detalhes da pauta."),
-		    @ApiResponse(code = 404, message = "Pauta não encontrada.")
-		})
+	@ApiResponses(value = { //
+			@ApiResponse(code = 200, message = "Retorna os detalhes da pauta."),
+			@ApiResponse(code = 404, message = "Pauta não encontrada.") })
 	@Transactional
 	@GetMapping(value = "/{id}", produces = { "application/json" })
 	public ResponseEntity<PautaDetalhesDto> detalhes(@PathVariable Long id) {
