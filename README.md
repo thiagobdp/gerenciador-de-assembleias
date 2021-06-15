@@ -1,6 +1,6 @@
-# Em construção - Gerenciador de Assembleias para Votação
+# Gerenciador de Assembleias para Votação
 
-## ⚙ Iniciando
+## Iniciando
 
 Clone este repositório em seu computador: https://github.com/thiagobdp/gerenciador-de-assembleias
 
@@ -48,10 +48,12 @@ As tabelas serão criadas neste banco de dados automaticamente pelo Hibernate qu
 
 ## Objetivo
 
-Criado o sistema de votação de assembleias.
+O objetivo desta aplicação é gerenciar a votação de assembleias.
 
 É possível consultar a documentação Swagger pelo link abaixo quando executando em localhost:
 * http://localhost:8080/swagger-ui.html
+
+Para a correta execução da aplicação, é importante primeiro executar os passos da "Tarefa Bônus 2" para instalar o Apache Kafka e deixá-lo executando em terminais windows.
 
 ## Tarefa Bônus 1 - Integração com sistemas externos
 
@@ -64,14 +66,14 @@ O serviço está disponível na URL
 E a documentação Swagger está disponível na URL
 * https://thiagobdp-usuarios-cpf.herokuapp.com/swagger-ui.html
 
-Ao realizar o voto, o sistema validará nessa API externa se o CPF informado é válido. Caso seja valido, retornará permitindo o voto. Caso seja inválido, retornará erro.
+Ao realizar o voto, a aplicação validará nessa API externa se o CPF informado é válido. Caso seja valido, retornará permitindo o voto. Caso seja inválido, retornará erro.
 
 
 ## Tarefa Bônus 2 - Mensageria e filas
 
 ### Instalar JRE 64bits
 
-Para evitar o problema no Kafka de OutOfMemory, é necessário instalar a versão 64bits do Java disponível nos dois links abaixo. Esse sistema foi testado no OS Windows 10
+Para evitar o problema no Kafka de OutOfMemory, é necessário instalar a versão 64bits do Java disponível nos dois links abaixo. Essa aplicação foi testado no OS Windows 10
 * https://www.java.com/pt-BR/download/manual.jsp
 * https://javadl.oracle.com/webapps/download/AutoDL?BundleId=244584_d7fc238d0cbf4b0dac67be84580cfb4b
 
@@ -96,7 +98,10 @@ Ao descompactar, irá gerar um arquivo chamado "kafka_2.13-2.8.0.tar". Também �
 
 O resultado final será um diretório chamado "kafka_2.13-2.8.0"
 
-#### Iniciar o zookeeper
+#### Iniciar o Zookeeper
+
+Antes de iniciar o Kafka, é necessário iniciar o Zookeeper
+
 1. abrir prompt de comando do Windows (cmd)
 2. executar o comando: `cd C:\kafka_2.13-2.8.0`
 3. executar o comando: `bin\windows\zookeeper-server-start.bat config\zookeeper.properties`
@@ -104,7 +109,7 @@ O resultado final será um diretório chamado "kafka_2.13-2.8.0"
 5. Via Explorador de Arquivos (Windows Explorer) navegar até o diretório "C:\Program Files (x86)\Java\jre1.8.0_291\bin"
 6. Criar um diretório vazio chamado "server"
 7. Copiar todo o conteúdo do diretório "client" para o novo diretório "server". Atenção para copiar somente o conteúdo do diretório "client". O próprio diretório "client" não deve ser copiado, somente seu conteúdo.
-8. Executar novamente o passo 4.
+8. Executar novamente o passo 3.
 9. Se o Zookeeper foi iniciado com sucesso, uma das linhas exibidas no terminal será: `INFO binding to port 0.0.0.0/0.0.0.0:2181 (org.apache.zookeeper.server.NIOServerCnxnFactory)`
 11. Não fechar (apenas minimizar) este terminal pois o Zookeeper ficará sendo executado nele.
 
@@ -133,7 +138,7 @@ Para facilitar o desenvolvimento, o consumidor das mensagens enviadas pela aplic
 4. Com o comando acima, o consumidor exibirá todas as mensagem que já foram enviadas e ficará ouvindo por novas mensagens
 5. Sempre que uma sessão de votação fechar, será enviada a mensagem para o kafka e será exibida neste terminal pelo consumidor
 
-#### Envio da mensagem pelo produtor
+#### Envio da mensagem pelo produtor (aplicação "Gerenciador de Assembleias para Votação")
 A mensagem é enviada quando o sistema identifica que a sessão passou do prazo. 
 
 Para fins de simplificação, a validação do prazo é realizada quando alguma operação é feita na pauta, ou seja, quando algum dos serviços abaixo são executados:
