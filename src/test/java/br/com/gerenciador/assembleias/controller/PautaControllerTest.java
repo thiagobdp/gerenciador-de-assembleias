@@ -40,7 +40,8 @@ public class PautaControllerTest {
 	private JdbcTemplate jdbcTemplate;
 
 	/**
-	 * Cadastra uma nova Pauta antes de cada teste a ser executado
+	 * Cadastra uma nova Pauta antes de cada teste ser executado
+	 * 
 	 * @throws Exception
 	 */
 	@Before
@@ -72,7 +73,7 @@ public class PautaControllerTest {
 	public void limpaBD() {
 		JdbcTestUtils.deleteFromTables(jdbcTemplate, "pauta", "voto");
 	}
-	
+
 	@Test
 	public void testCadastrar() throws Exception {
 		URI uri = new URI("/pauta");
@@ -127,7 +128,8 @@ public class PautaControllerTest {
 				.andReturn();
 
 		String jsonReturned = mvcResultLista.getResponse().getContentAsString();
-		String jsonExpected = "{\"id\":"+ultimoIDpauta+",\"titulo\":\"Definir a linguagem padrao para o sistema\",\"descricao\":\"Sera votado se a linguagem sera Java.\",\"inicioSessao\":null,\"fimSessao\":null,\"qtdVotosSim\":0,\"qtdVotosNao\":0,\"sessaoFechada\":false}";
+		String jsonExpected = "{\"id\":" + ultimoIDpauta
+				+ ",\"titulo\":\"Definir a linguagem padrao para o sistema\",\"descricao\":\"Sera votado se a linguagem sera Java.\",\"inicioSessao\":null,\"fimSessao\":null,\"qtdVotosSim\":0,\"qtdVotosNao\":0,\"sessaoFechada\":false}";
 
 		JSONAssert.assertEquals(jsonExpected, jsonReturned, JSONCompareMode.LENIENT);
 	}

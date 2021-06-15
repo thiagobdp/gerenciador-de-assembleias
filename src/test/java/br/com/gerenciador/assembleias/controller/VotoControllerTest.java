@@ -41,6 +41,11 @@ public class VotoControllerTest {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	/**
+	 * Cadastra uma nova Pauta antes de cada teste ser executado
+	 * 
+	 * @throws Exception
+	 */
 	@Before
 	public void cadastraPauta() throws Exception {
 		URI uri = new URI("/pauta");
