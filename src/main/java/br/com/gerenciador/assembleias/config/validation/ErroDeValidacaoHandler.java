@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 @RestControllerAdvice
 public class ErroDeValidacaoHandler {
@@ -32,5 +33,12 @@ public class ErroDeValidacaoHandler {
 			dto.add(erro);
 		});
 		return dto;
+	}
+
+	
+	@ResponseStatus(code = HttpStatus.NOT_FOUND)
+	@ExceptionHandler(HttpClientErrorException.NotFound.class)
+	public String handle(HttpClientErrorException exception) {				
+		return exception.getResponseBodyAsString();
 	}
 }

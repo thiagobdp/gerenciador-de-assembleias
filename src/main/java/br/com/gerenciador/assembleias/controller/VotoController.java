@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -112,19 +110,9 @@ public class VotoController {
 
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<ResultadoValidaUsuarioEnum> result = null;
-		try {
-			result = restTemplate.exchange(USER_VALIDA_CPF, HttpMethod.GET, entity, ResultadoValidaUsuarioEnum.class,
-					param);
-//		} catch (RestClientException ex) {
-//			System.out.println(ex.getMessage());
-//			System.out.println(ex);
-		} catch (HttpClientErrorException e) {
-			if (e.getStatusCode().compareTo(HttpStatus.NOT_FOUND) == 0) {
-				throw new IllegalStateException("CPF: '" + cpf + "' é inválido");
-			} else {
-				throw e;
-			}
-		}
+
+		result = restTemplate.exchange(USER_VALIDA_CPF, HttpMethod.GET, entity, ResultadoValidaUsuarioEnum.class,
+				param);
 
 		if (ResultadoValidaUsuarioEnum.ABLE_TO_VOTE.compareTo(result.getBody()) == 0) {
 			return true;

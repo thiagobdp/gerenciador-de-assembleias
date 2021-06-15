@@ -203,7 +203,7 @@ public class VotoControllerTest {
 				.contentType(MediaType.APPLICATION_JSON))//
 				.andExpect(MockMvcResultMatchers//
 						.status()//
-						.isBadRequest())
+						.isNotFound())
 				.andReturn();
 	}
 	
